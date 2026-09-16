@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>نصب RaGNaR GEM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0e14; --panel:#121823; --panel-2:#182130; --line:rgba(140,170,210,.14);
+  --line-strong:rgba(140,170,210,.28); --ink:#e9eff8; --muted:#8395ad; --dim:#5a6a80;
+  --accent:#38d6ff; --accent-deep:#1b6ea8; --ok:#33d68a; --bad:#ff5f78; --warn:#ffc04d;
+  --r:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Vazirmatn,Tahoma,sans-serif;background:var(--bg);color:var(--ink);
+  line-height:1.8;min-height:100vh;
+  background-image:radial-gradient(900px 420px at 85% -10%,rgba(56,214,255,.10),transparent 60%),
+                   radial-gradient(700px 400px at 0% 100%,rgba(27,110,168,.14),transparent 60%);
+}
+code,.mono,input[dir=ltr]{font-family:ui-monospace,"JetBrains Mono",Consolas,monospace;direction:ltr;unicode-bidi:isolate}
+.wrap{max-width:860px;margin:0 auto;padding:32px 20px 64px}
+
+header.top{display:flex;align-items:center;gap:14px;margin-bottom:28px}
+.gem{width:40px;height:40px;flex:none}
+header.top h1{font-size:1.25rem;font-weight:700;letter-spacing:-.01em}
+header.top p{color:var(--muted);font-size:.86rem}
+.chip{margin-inline-start:auto;font-size:.78rem;color:var(--muted);border:1px solid var(--line);
+  border-radius:999px;padding:4px 12px;display:flex;align-items:center;gap:7px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--warn)}
+.dot.ok{background:var(--ok)}.dot.bad{background:var(--bad)}
+
+.rail{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:22px}
+.rail div{border-top:2px solid var(--line);padding-top:10px;color:var(--dim);font-size:.82rem}
+.rail div.on{border-top-color:var(--accent);color:var(--ink)}
+.rail div.done{border-top-color:var(--accent-deep);color:var(--muted)}
+.rail b{display:block;font-weight:500}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:26px}
+.card + .card{margin-top:16px}
+h2{font-size:1.02rem;font-weight:700;margin-bottom:6px}
+.sub{color:var(--muted);font-size:.87rem;margin-bottom:20px}
+
+.field{margin-bottom:16px}
+label{display:block;font-size:.88rem;margin-bottom:7px}
+.hint{color:var(--dim);font-size:.78rem;margin-top:6px}
+input,select{
+  width:100%;background:var(--panel-2);border:1px solid var(--line);border-radius:9px;
+  color:var(--ink);font-family:inherit;font-size:.92rem;padding:11px 13px;transition:border-color .15s
+}
+input:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(56,214,255,.12)}
+input[dir=ltr]{text-align:left}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:620px){.grid2{grid-template-columns:1fr}}
+
+.btn{border:0;border-radius:9px;font-family:inherit;font-size:.92rem;font-weight:500;
+  padding:11px 20px;cursor:pointer;transition:filter .15s}
+.btn:disabled{opacity:.55;cursor:progress}
+.btn-main{background:var(--accent);color:#04202c}
+.btn-main:hover:not(:disabled){filter:brightness(1.08)}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line-strong)}
+.row{display:flex;gap:10px;align-items:center;margin-top:20px;flex-wrap:wrap}
+.row .grow{flex:1}
+
+.note{border:1px solid var(--line);border-inline-start:3px solid var(--accent-deep);
+  border-radius:9px;padding:13px 15px;font-size:.85rem;color:var(--muted);background:var(--panel-2)}
+.note.ok{border-inline-start-color:var(--ok)}
+.note.bad{border-inline-start-color:var(--bad);color:#ffc9d2}
+.note.warn{border-inline-start-color:var(--warn)}
+.note b{color:var(--ink);font-weight:500}
+
+.checks{list-style:none;font-size:.88rem}
+.checks li{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.checks li:last-child{border-bottom:0}
+.checks span.state{margin-inline-start:auto;font-size:.8rem;color:var(--muted)}
+.mark{width:18px;height:18px;border-radius:50%;flex:none;display:grid;place-items:center;
+  font-size:11px;background:rgba(51,214,138,.15);color:var(--ok)}
+.mark.bad{background:rgba(255,95,120,.15);color:var(--bad)}
+.mark.warn{background:rgba(255,192,77,.15);color:var(--warn)}
+
+.hidden{display:none}
+.kv{font-size:.85rem}
+.kv div{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.kv div:last-child{border-bottom:0}
+.kv span:first-child{color:var(--muted);min-width:130px}
+footer{color:var(--dim);font-size:.78rem;text-align:center;margin-top:26px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <svg class="gem" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+      <path d="M14 6h20l10 13-20 23L4 19 14 6z" fill="url(#g)" stroke="#8fe8ff" stroke-width="1.2" stroke-linejoin="round"/>
+      <path d="M4 19h40M14 6l6 13-6 23M34 6l-6 13 6 23M20 19h8" stroke="#bff1ff" stroke-width=".9" opacity=".55"/>
+      <defs><linearGradient id="g" x1="4" y1="6" x2="40" y2="42" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#38d6ff" stop-opacity=".55"/><stop offset="1" stop-color="#1b6ea8" stop-opacity=".35"/>
+      </linearGradient></defs>
+    </svg>
+    <div>
+      <h1>نصب ربات RaGNaR GEM</h1>
+      <p>سه مرحله تا راه‌افتادن ربات روی همین سرور</p>
+    </div>
+    <div class="chip"><i class="dot" id="hdot"></i><span id="hstate">در حال بررسی</span></div>
+  </header>
+
+  <div class="rail">
+    <div class="on" data-rail="1"><b>۱. بررسی سرور</b>پیش‌نیازها و دیتابیس</div>
+    <div data-rail="2"><b>۲. اطلاعات ربات</b>توکن، ادمین، کانال‌ها</div>
+    <div data-rail="3"><b>۳. پایان نصب</b>اجرای ربات</div>
+  </div>
+
+  <!-- مرحله ۱ -->
+  <section class="card" data-step="1">
+    <h2>وضعیت سرور</h2>
+    <p class="sub">قبل از شروع، پیش‌نیازها بررسی می‌شوند.</p>
+    <ul class="checks" id="checks"><li>در حال بررسی…</li></ul>
+
+    <div id="dbbox" class="hidden" style="margin-top:20px">
+      <div class="note warn" style="margin-bottom:16px">
+        <b>دیتابیس MySQL پیدا نشد.</b> اگر روی Railway هستید، از داشبورد پروژه
+        <code>+ New → Database → MySQL</code> را اضافه کنید تا آدرس اتصال خودکار خوانده شود.
+        در غیر این صورت مشخصات دیتابیس را دستی وارد کنید.
+      </div>
+      <div class="grid2">
+        <div class="field"><label for="db_host">هاست</label>
+          <input id="db_host" dir="ltr" placeholder="containers-us-west-1.railway.app"></div>
+        <div class="field"><label for="db_port">پورت</label>
+          <input id="db_port" dir="ltr" value="3306"></div>
+        <div class="field"><label for="db_user">نام کاربری</label>
+          <input id="db_user" dir="ltr" value="root"></div>
+        <div class="field"><label for="db_pass">رمز عبور</label>
+          <input id="db_pass" dir="ltr" type="password"></div>
+      </div>
+      <div class="field"><label for="db_name">نام دیتابیس</label>
+        <input id="db_name" dir="ltr" value="railway"></div>
+      <div class="row">
+        <button class="btn btn-ghost" id="dbtest">تست اتصال دیتابیس</button>
+        <span class="hint" id="dbmsg"></span>
+      </div>
+    </div>
+
+    <div class="row">
+      <button class="btn btn-main grow" id="go2">ادامه</button>
+    </div>
+  </section>
+
+  <!-- مرحله ۲ -->
+  <section class="card hidden" data-step="2">
+    <h2>اطلاعات ربات</h2>
+    <p class="sub">این مقادیر داخل دیتابیس ذخیره می‌شوند و با هر دیپلوی دوباره خوانده می‌شوند.</p>
+
+    <div class="field">
+      <label for="bot_token">توکن ربات تلگرام</label>
+      <input id="bot_token" dir="ltr" placeholder="123456789:AAE...">
+      <p class="hint">توکن را از <code>@BotFather</code> بگیرید.</p>
+    </div>
+
+    <div class="field">
+      <label for="admin_id">آیدی عددی ادمین</label>
+      <input id="admin_id" dir="ltr" placeholder="5538076783">
+      <p class="hint">آیدی عددی خود را از <code>@userinfobot</code> بگیرید.</p>
+    </div>
+
+    <div class="grid2">
+      <div class="field"><label for="channel_2">کانال دوم</label><input id="channel_2" dir="ltr" value="@RaGNaR_New"></div>
+      <div class="field"><label for="channel_3">کانال سوم</label><input id="channel_3" dir="ltr" value="@RaGNaR_SoLd"></div>
+      <div class="field"><label for="channel_4">کانال چهارم</label><input id="channel_4" dir="ltr" value="@RaGNaR_GaP1"></div>
+      <div class="field"><label for="withdrawal_channel">کانال اعلام برداشت</label><input id="withdrawal_channel" dir="ltr" value="@RaGNaR_Sold"></div>
+    </div>
+    <p class="hint" style="margin-bottom:16px">کانال اجباری <code id="mand">@kodisavpn</code> همیشه فعال است و از اینجا قابل حذف نیست.</p>
+
+    <div class="grid2">
+      <div class="field"><label for="referrals_required">تعداد رفرال لازم</label><input id="referrals_required" dir="ltr" value="5"></div>
+      <div class="field"><label for="gems_per_withdrawal">جم هر برداشت</label><input id="gems_per_withdrawal" dir="ltr" value="110"></div>
+    </div>
+
+    <div class="note bad hidden" id="err"></div>
+
+    <div class="row">
+      <button class="btn btn-ghost" id="back1">مرحله قبل</button>
+      <button class="btn btn-main grow" id="install">نصب و اجرای ربات</button>
+    </div>
+  </section>
+
+  <!-- مرحله ۳ -->
+  <section class="card hidden" data-step="3">
+    <h2>ربات راه افتاد</h2>
+    <p class="sub">نصب کامل شد و ربات در حال دریافت پیام‌هاست.</p>
+    <div class="kv" id="result"></div>
+    <div class="note" style="margin-top:18px">
+      <b>لینک پنل مدیریت را ذخیره کنید.</b> این لینک کلید دسترسی دارد و فقط از طریق همین آدرس باز می‌شود.
+    </div>
+    <div class="row">
+      <a class="btn btn-main grow" id="panel" href="#" style="text-align:center;text-decoration:none">رفتن به پنل</a>
+      <a class="btn btn-ghost" id="tgopen" href="#" target="_blank" style="text-decoration:none">باز کردن ربات</a>
+    </div>
+  </section>
+
+  <footer>RaGNaR GEM · نصب‌کننده نسخه ۲</footer>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const post = async (url, body) => {
+  const res = await fetch(url, {method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(body || {})});
+  return res.json();
+};
+let dbReady = false, dbDsn = '';
+const INSTALL_KEY = new URLSearchParams(location.search).get('key') || '';
+
+function step(n){
+  document.querySelectorAll('[data-step]').forEach(s =>
+    s.classList.toggle('hidden', s.dataset.step != n));
+  document.querySelectorAll('[data-rail]').forEach(r => {
+    r.classList.toggle('on', r.dataset.rail == n);
+    r.classList.toggle('done', r.dataset.rail < n);
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function mark(ok){ return ok === true ? '<i class="mark">✓</i>' : ok === 'warn'
+  ? '<i class="mark warn">!</i>' : '<i class="mark bad">✕</i>'; }
+
+async function loadChecks(){
+  const data = await (await fetch('/api/environment')).json();
+  $('checks').innerHTML = data.checks.map(c =>
+    `<li>${mark(c.ok)}<span>${c.title}</span><span class="state">${c.detail}</span></li>`).join('');
+  $('hdot').className = 'dot ' + (data.database.ok ? 'ok' : 'bad');
+  $('hstate').textContent = data.database.ok ? 'آماده نصب' : 'دیتابیس تنظیم نشده';
+  dbReady = data.database.ok;
+  $('dbbox').classList.toggle('hidden', data.database.ok);
+  if (data.values) {
+    for (const [k, v] of Object.entries(data.values)) if ($(k) && v) $(k).value = v;
+  }
+  if (data.mandatory_channel) $('mand').textContent = data.mandatory_channel;
+}
+
+$('dbtest').onclick = async () => {
+  const btn = $('dbtest'); btn.disabled = true; $('dbmsg').textContent = 'در حال تست…';
+  const data = await post('/api/test-db', {
+    host:$('db_host').value.trim(), port:$('db_port').value.trim(), user:$('db_user').value.trim(),
+    password:$('db_pass').value, name:$('db_name').value.trim()
+  });
+  btn.disabled = false;
+  if (data.ok){ dbReady = true; dbDsn = data.dsn; $('dbmsg').textContent = 'اتصال برقرار شد · ' + data.version;
+    $('hdot').className = 'dot ok'; $('hstate').textContent = 'آماده نصب'; }
+  else { dbReady = false; $('dbmsg').textContent = data.error; }
+};
+
+$('go2').onclick = () => {
+  if (!dbReady){ $('dbmsg').textContent = 'اول اتصال دیتابیس را تست کنید.'; $('dbbox').classList.remove('hidden'); return; }
+  step(2);
+};
+$('back1').onclick = () => step(1);
+
+$('install').onclick = async () => {
+  const btn = $('install'); const err = $('err');
+  err.classList.add('hidden');
+  btn.disabled = true; btn.textContent = 'در حال نصب…';
+  const payload = {
+    database_dsn: dbDsn,
+    bot_token: $('bot_token').value.trim(),
+    admin_id: $('admin_id').value.trim(),
+    channel_2: $('channel_2').value.trim(),
+    channel_3: $('channel_3').value.trim(),
+    channel_4: $('channel_4').value.trim(),
+    withdrawal_channel: $('withdrawal_channel').value.trim(),
+    referrals_required: $('referrals_required').value.trim(),
+    gems_per_withdrawal: $('gems_per_withdrawal').value.trim(),
+    install_key: INSTALL_KEY
+  };
+  const data = await post('/api/install', payload);
+  btn.disabled = false; btn.textContent = 'نصب و اجرای ربات';
+  if (!data.ok){ err.textContent = data.error; err.classList.remove('hidden'); return; }
+  $('result').innerHTML = `
+    <div><span>نام کاربری ربات</span><b class="mono">@${data.bot_username}</b></div>
+    <div><span>دیتابیس</span><b>${data.database}</b></div>
+    <div><span>جدول‌ها</span><b>ساخته شد</b></div>
+    <div><span>کانال‌های عضویت</span><b class="mono">${data.channels.join(' · ')}</b></div>`;
+  $('panel').href = data.panel_url;
+  $('tgopen').href = 'https://t.me/' + data.bot_username;
+  step(3);
+};
+
+loadChecks();
+</script>
+</body>
+</html>
